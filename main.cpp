@@ -12,13 +12,18 @@ GNU General Public License for more details.
 
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
+
+Code used from: https://github.com/improvess/cpp-linux-system-stats
 */
 
 
 #include "include.h"
 #include "monitor_cpu.h"
+#include "monitor_storage_memory.h"
 
 using namespace get_cpu_stats;
+using namespace get_disk_stats;
+using namespace get_memory_stats;
 
 int main() {
     CPU_stats t1 = read_cpu_data();
@@ -33,4 +38,10 @@ int main() {
     std::cout << "CPU logical cores: " << get_cpu_logical_core_count() << std::endl;
     std::cout << "CPU usage is: " << (100.0f * get_cpu_usage(t1, t2)) << "%\n";
     //std::cout << "CPU temperature: " << get_thermal_zone_temperature(find_thermalzone_index()) << std::endl;
+
+    auto memory_data = read_memory_data();
+    std::cout << "Memory\nSwap Usage: " << (100.0f * memory_data.get_swap_usage()) << "%\n";
+    std::cout << "Memory usage: " << (100.0f * memory_data.get_memory_usage()) << "%\n";
+
+    std::cout << "Disk\nDisk usage: " << (100.0f * get_disk_usage("/")) << "%\n";
 }

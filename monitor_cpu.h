@@ -1,18 +1,20 @@
 /*Copyright (C) <2026>  <ChaosMelone54>
- *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <https://www.gnu.org/licenses/>.
- */
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program.  If not, see <https://www.gnu.org/licenses/>.
+
+Code used from: https://github.com/improvess/cpp-linux-system-stats
+*/
 
 #pragma once
 
@@ -108,18 +110,22 @@ namespace get_cpu_stats {
         return result;
     }
 
+    //CPU name
     inline std::string get_CPU_name() {
         std::ifstream CPU_file("/proc/cpuinfo");
         std::string line;
 
+        //Search for cpu model name
         while(std::getline(CPU_file, line)) {
             if(line.rfind("model name", 0) == 0) {
+                //Copies everything after ":" and returns it
                 auto pos = line.find(':');
                 if(pos != std::string::npos) {
                     return line.substr(pos + 2);
                 }
             }
         }
+        //If unseccessful
         return "Unknown CPU";
     }
 
